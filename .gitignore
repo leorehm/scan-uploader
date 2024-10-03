@@ -1,0 +1,8 @@
+.env
+*.pdf
+
+nextcloud/consume/*
+nextcloud/failed/*
+
+paperless/consume/*
+paperless/failed/

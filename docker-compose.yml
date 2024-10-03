@@ -1,0 +1,12 @@
+---
+services:
+  scan-uploader:
+    image: scan-uploader 
+    container_name: scan-uploader
+    restart: unless-stopped
+    volumes:
+      - "./nextcloud:/app/nextcloud"
+      - "./paperless:/app/paperless"
+    env_file:
+        - .env
+      
