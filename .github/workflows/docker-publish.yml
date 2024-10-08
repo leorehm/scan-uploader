@@ -58,7 +58,8 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      
+
+      # use 'latest' or tag name
       - name: Determine Docker tag
         id: get_tag
         run: |
