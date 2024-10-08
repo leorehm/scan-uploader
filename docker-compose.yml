@@ -1,7 +1,7 @@
 ---
 services:
   scan-uploader:
-    image: scan-uploader 
+    image: "ghcr.io/leorehm/scan-uploader:latest"
     container_name: scan-uploader
     restart: unless-stopped
     volumes:
