@@ -1,6 +1,6 @@
 # Nextcloud Scan Uploader
 
-A simple tool for automatically uploading scans or any other files to Nextcloud or Paperless-ngx.
+A dockerized script that automatically uploads scans from a network share to to Nextcloud or Paperless-ngx.
 
 ## Installation
 
@@ -9,8 +9,8 @@ Docker
 docker run \
   --name scan-uploader \
   --env-file=.env \
-  --volume ./nextcloud:/app/nextcloud \
-  --volume ./paperless:/app/paperless \
+  --volume ./consume:/app/consume\
+  --volume ./failed:/app/failed \
   ghcr.io/leorehm/scan-uploader:latest
 ```
 
@@ -22,8 +22,8 @@ services:
     container_name: scan-uploader
     restart: unless-stopped
     volumes:
-      - "./nextcloud:/app/nextcloud"
-      - "./paperless:/app/paperless"
+      - "./consume:/app/consume"
+      - "./failed:/app/failed"
     env_file:
         - .env
 ```

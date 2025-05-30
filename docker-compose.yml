@@ -1,12 +1,36 @@
 ---
 services:
   scan-uploader:
-    image: "ghcr.io/leorehm/scan-uploader:latest"
+    image: scan-uploader:latest
     container_name: scan-uploader
     restart: unless-stopped
     volumes:
-      - "./nextcloud:/app/nextcloud"
-      - "./paperless:/app/paperless"
+      - "./consume:/app/consume"
+      - "./failed:/app/failed"
     env_file:
         - .env
-      
+
+  smbd:
+    image: "ghcr.io/servercontainers/samba"
+    container_name: smbd
+    restart: unless-stopped
+    ports:
+      - "139:139"
+      - "445:445"
+    volumes:
+      - "/etc/avahi/services/:/external/services"
+      - "./consume:/shares/scan/consume"
+      - "./failed:/shares/scan/failed"
+    environment:
+      AVAHI_NAME: rockpi        # network broadcast name
+      ACCOUNT_printer: hunter2  # set password for printer user here 
+      UID_printer: 1002         # set uid for printer user here
+      SAMBA_CONF_MAP_TO_GUEST: Bad User
+      SAMBA_VOLUME_CONFIG_scan: |
+        [scan]
+          comment = scan-uploader
+          path = /shares/scan
+          browsable = yes
+          writable = yes
+          read only = no
+          guest ok = no
