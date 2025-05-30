@@ -2,7 +2,7 @@
 
 echo "Starting Scan Uploader..."
 
-set -ux
+set -u
 
 ############################################################
 # Setup 
